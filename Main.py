@@ -102,3 +102,44 @@ def display_report(metrics: Dict[str, Any]) -> None:
     print("=" * 27)
 
 #endregion
+
+# region I've Creating a sample access.log file with mock data to run the script and verify our regex and counters function correctly.
+
+def generate_mock_logs() -> None:
+    mock_data = [
+        '192.168.1.10 - - [30/Jun/2026:10:00:01 +0000] "GET /index.html HTTP/1.1" 200 1043\n',
+        '192.168.1.11 - - [30/Jun/2026:10:00:02 +0000] "POST /login HTTP/1.1" 200 450\n',
+        '192.168.1.10 - - [30/Jun/2026:10:00:03 +0000] "GET /index.html HTTP/1.1" 200 1043\n',
+        '192.168.1.12 - - [30/Jun/2026:10:00:04 +0000] "GET /secret.html HTTP/1.1" 403 -\n',
+        '192.168.1.13 - - [30/Jun/2026:10:00:05 +0000] "GET /broken HTTP/1.1" 404 230\n'
+    ]
+    with open("access.log", "w", encoding="utf-8") as file:
+        file.writelines(mock_data)
+    print("Mock log file 'access.log' generated successfully.")
+
+#endregion
+
+
+#region
+
+# This is the controller function (main) that manages the operational execution lifecycle. It defines the target path, triggers the sequential data pipeline (Read $\rightarrow$ Analyze $\rightarrow$ Display), and acts as a safety net catching runtime errors.
+
+def main() -> None:
+    # Call it here first to ensure 'access.log' physically exists on disk before parsing begins
+    generate_mock_logs() 
+    
+    log_file = Path("access.log")
+    try:
+        print(f"Initializing scan on: {log_file}...")
+        raw_data = parse_log_file(log_file)
+        analysis_results = analyze_log_data(raw_data)
+        display_report(analysis_results)
+    except FileNotFoundError as e:
+        print(f"Configuration Error: {e}")
+    except Exception as e:
+        print(f"An unexpected system error occurred during execution: {e}")
+
+if __name__ == "__main__":
+    main()
+
+#endregion
