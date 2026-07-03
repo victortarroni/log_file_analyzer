@@ -132,7 +132,7 @@ def main() -> None:
     try:
         print(f"Initializing scan on: {log_file}...")
         raw_data = parse_log_file(log_file)
-        analysis_results = analyze_log_data(raw_data)
+        analysis_results = analyse_log_data(raw_data)
         display_report(analysis_results)
     except FileNotFoundError as e:
         print(f"Configuration Error: {e}")
