@@ -55,7 +55,7 @@ Requires Python 3.8+ (for f-string formatting and typing usage as written). No e
 ```bash
 git clone <your-repo-url>
 cd <repo-folder>
-python Main.py
+python main.py
 ```
 
 On execution, the script generates a small mock `access.log` in the working directory, parses it, and prints the report to stdout. No arguments or configuration are required for this first run.
