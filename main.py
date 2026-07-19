@@ -81,7 +81,7 @@ def analyse_log_data(parsed_logs: List[Dict[str, Any]]) -> Dict[str, Any]:
 def display_report(metrics: Dict[str, Any]) -> None:
     if metrics["total_requests"] == 0:
         print("=== Log Analysis Report ===")
-        print("No valid log entries found to analyze.")
+        print("No valid log entries found to analyse.")
         return
 
     print("=== Log Analysis Report ===")
